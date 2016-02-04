@@ -10,6 +10,9 @@
     "type": "git",
     "url": "git+https://github.com/neurotech/edumate-toolbelt.git"
   },
+  "bin": {
+    "edumate": "cli.js"
+  },
   "keywords": [
     "edumate",
     "cli",
