@@ -23,5 +23,12 @@
   "bugs": {
     "url": "https://github.com/neurotech/edumate-toolbelt/issues"
   },
-  "homepage": "https://github.com/neurotech/edumate-toolbelt#readme"
+  "homepage": "https://github.com/neurotech/edumate-toolbelt#readme",
+  "dependencies": {
+    "chalk": "1.1.1",
+    "log-symbols": "1.0.2",
+    "meow": "3.7.0",
+    "node-edumate": "5.0.0",
+    "update-notifier": "0.6.0"
+  }
 }
