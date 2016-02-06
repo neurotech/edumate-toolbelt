@@ -1,4 +1,4 @@
-#!/usr/bin/env DYLD_LIBRARY_PATH=node_modules/ibm_db/installer/clidriver/lib/icc node
+#!/usr/bin/env node
 'use strict';
 const updateNotifier = require('update-notifier');
 const meow = require('meow');
