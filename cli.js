@@ -19,6 +19,9 @@ const help = `
     ${chalk.blue('staff')} ${chalk.white('<STAFF_ID>')}
       Returns the STAFF_NUMBER associated with STAFF_ID.
 
+    ${chalk.blue('contact')} ${chalk.white('<CONTACT_ID>')}
+      Returns the STAFF_NUMBER or STUDENT_NUMBER associated with CONTACT_ID.
+
     ${chalk.blue('period')}
       Returns the current week, period, and end time of period.
 `;
@@ -32,6 +35,9 @@ if (cli.input.length === 0) {
   }
   if (cli.input[0] === 'staff') {
     edumate.staffId(cli.input[1]);
+  }
+  if (cli.input[0] === 'contact') {
+    edumate.contact(cli.input[1]);
   }
   if (cli.input[0] === 'period') {
     edumate.period();

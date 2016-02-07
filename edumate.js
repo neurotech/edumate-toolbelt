@@ -38,6 +38,19 @@ edumate.staffId = function (id) {
     });
 };
 
+edumate.contact = function (id) {
+  var sql = `SELECT * FROM TABLE(DB2INST1.GET_API_V1_CONTACT_NUMBER(${id}))`;
+  db.query(config, sql, {clean: true})
+    .then(results => {
+      if (results.length === 0) { _noResults('contact'); } else {
+        console.log(results[0].contactNumber);
+      }
+    })
+    .catch(error => {
+      console.error(error);
+    });
+};
+
 edumate.period = function () {
   var sql = `SELECT * FROM DB2INST1.view_api_v1_periods WHERE current = 1`;
   db.query(config, sql, {clean: true})
