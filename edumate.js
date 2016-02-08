@@ -1,5 +1,6 @@
 'use strict';
 const db = require('node-edumate');
+const moment = require('moment');
 const logSymbols = require('log-symbols');
 const chalk = require('chalk');
 const edumate = {};
@@ -56,7 +57,8 @@ edumate.period = function () {
   db.query(config, sql, {clean: true})
     .then(results => {
       if (results.length === 0) { _noResults('period'); } else {
-        console.log(`We are in week ${chalk.blue(results[0].week)}.\nIt's currently ${chalk.yellow(results[0].period.toLowerCase())}.\nThis period will end at ${chalk.magenta(results[0].endTime)}.`);
+        var endTime = moment(results[0].endTime, 'HH:mm:ss').format('h:mm A');
+        console.log(`We are in week ${chalk.blue(results[0].week)}.\nIt's currently ${chalk.yellow(results[0].period.toLowerCase())}.\nThis period will end at ${chalk.magenta(endTime)}.`);
       }
     })
     .catch(error => {
