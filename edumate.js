@@ -1,8 +1,10 @@
 'use strict';
 const db = require('node-edumate');
 const moment = require('moment');
+const Table = require('tty-table');
 const logSymbols = require('log-symbols');
 const chalk = require('chalk');
+const style = require('./style');
 const edumate = {};
 
 const config = {
@@ -17,7 +19,7 @@ edumate.studentId = function (id) {
   var sql = `SELECT student_number FROM EDUMATE.student WHERE student_id = ${id}`;
   db.query(config, sql, {clean: true})
     .then(results => {
-      if (results.length === 0) { _noResults('student'); } else {
+      if (results.length === 0) { _noResults('student_number'); } else {
         console.log(results[0].studentNumber);
       }
     })
@@ -30,8 +32,35 @@ edumate.staffId = function (id) {
   var sql = `SELECT staff_number FROM EDUMATE.staff WHERE staff_id = ${id}`;
   db.query(config, sql, {clean: true})
     .then(results => {
-      if (results.length === 0) { _noResults('staff'); } else {
+      if (results.length === 0) { _noResults('staff_number'); } else {
         console.log(results[0].staffNumber);
+      }
+    })
+    .catch(error => {
+      console.error(error);
+    });
+};
+
+edumate.findStaff = function (search) {
+  var rows = [];
+  var header = style.staffHeader;
+  var sql = `SELECT * FROM DB2INST1.VIEW_API_V1_STAFF_USERS WHERE firstname LIKE '%${search}%' OR surname LIKE '%${search}%' ORDER BY LOWER(surname), firstname`;
+
+  db.query(config, sql, {clean: true})
+    .then(results => {
+      if (results.length === 0) { _noResults('staff'); } else {
+        results.forEach(function (value, index) {
+          rows.push(
+            [value.id, value.firstname + ' ' + value.surname, value.email, value.house, value.location]
+          );
+        });
+        var table = Table(header, rows, {
+          borderStyle: 1,
+          paddingBottom: 0,
+          headerAlign: 'center',
+          align: 'center'
+        });
+        console.log(table.render());
       }
     })
     .catch(error => {
