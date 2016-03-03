@@ -31,23 +31,13 @@ const help = `
 const cli = meow(help);
 
 if (cli.input.length === 0) {
-  console.log(`  ${chalk.red('No arguments specified!')} \n ${help}`);
+  console.error(`  ${chalk.red('No arguments specified!')} \n ${help}`);
 } else {
-  if (cli.input[0] === 'student_number') {
-    edumate.studentId(cli.input[1]);
-  }
-  if (cli.input[0] === 'staff_number') {
-    edumate.staffId(cli.input[1]);
-  }
-  if (cli.input[0] === 'staff') {
-    edumate.findStaff(cli.input[1]);
-  }
-  if (cli.input[0] === 'contact') {
-    edumate.contact(cli.input[1]);
-  }
-  if (cli.input[0] === 'period') {
-    edumate.period();
-  }
+  if (cli.input[0] === 'student_number') { edumate.studentId(cli.input[1]); }
+  if (cli.input[0] === 'staff_number') { edumate.staffId(cli.input[1]); }
+  if (cli.input[0] === 'staff') { edumate.findStaff(cli.input[1]); }
+  if (cli.input[0] === 'contact') { edumate.contact(cli.input[1]); }
+  if (cli.input[0] === 'period') { edumate.period(); }
 }
 
 updateNotifier({pkg}).notify();
