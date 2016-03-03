@@ -4,6 +4,7 @@ const moment = require('moment');
 const Table = require('tty-table');
 const logSymbols = require('log-symbols');
 const chalk = require('chalk');
+const Ora = require('ora');
 const style = require('./style');
 const edumate = {};
 
@@ -15,44 +16,58 @@ const config = {
   password: process.env.EDUMATE_PASSWORD
 };
 
-edumate.studentId = function (id) {
+const spinner = new Ora({ spinner: 'earth' });
+
+edumate.studentId = id => {
   var sql = `SELECT student_number FROM EDUMATE.student WHERE student_id = ${id}`;
+  _spinner('Searching for STUDENT_NUMBER that is linked with STUDENT_ID', id);
   db.query(config, sql, {clean: true})
     .then(results => {
       if (results.length === 0) { _noResults('student_number'); } else {
+        spinner.stop();
         console.log(results[0].studentNumber);
       }
     })
     .catch(error => {
+      spinner.stop();
       console.error(error);
     });
 };
 
-edumate.staffId = function (id) {
+edumate.staffId = id => {
   var sql = `SELECT staff_number FROM EDUMATE.staff WHERE staff_id = ${id}`;
+  _spinner('Searching for STAFF_NUMBER that is linked with STAFF_ID', id);
   db.query(config, sql, {clean: true})
     .then(results => {
       if (results.length === 0) { _noResults('staff_number'); } else {
+        spinner.stop();
         console.log(results[0].staffNumber);
       }
     })
     .catch(error => {
+      spinner.stop();
       console.error(error);
     });
 };
 
-edumate.findStaff = function (search) {
+edumate.findStaff = search => {
   var rows = [];
   var header = style.staffHeader;
   var sql = `SELECT * FROM DB2INST1.VIEW_API_V1_STAFF_USERS WHERE firstname LIKE '%${search}%' OR surname LIKE '%${search}%' ORDER BY LOWER(surname), firstname`;
 
+  _spinner('Searching for staff members with names containing', search);
   db.query(config, sql, {clean: true})
     .then(results => {
       if (results.length === 0) { _noResults('staff'); } else {
-        results.forEach(function (value, index) {
-          rows.push(
-            [value.id, value.firstname + ' ' + value.surname, value.email, value.house, value.location]
-          );
+        spinner.stop();
+        results.forEach((value, index) => {
+          rows.push([
+            value.id,
+            value.firstname + ' ' + value.surname,
+            value.email,
+            value.house,
+            value.location
+          ]);
         });
         var table = Table(header, rows, {
           borderStyle: 1,
@@ -64,39 +79,54 @@ edumate.findStaff = function (search) {
       }
     })
     .catch(error => {
+      spinner.stop();
       console.error(error);
     });
 };
 
-edumate.contact = function (id) {
+edumate.contact = id => {
   var sql = `SELECT * FROM TABLE(DB2INST1.GET_API_V1_CONTACT_NUMBER(${id}))`;
+  _spinner('Searching for STAFF/STUDENT_NUMBER linked to CONTACT_ID', id);
+
   db.query(config, sql, {clean: true})
     .then(results => {
       if (results.length === 0) { _noResults('contact'); } else {
+        spinner.stop();
         console.log(results[0].contactNumber);
       }
     })
     .catch(error => {
+      spinner.stop();
       console.error(error);
     });
 };
 
-edumate.period = function () {
+edumate.period = () => {
   var sql = `SELECT * FROM DB2INST1.view_api_v1_periods WHERE current = 1`;
+  _spinner('Searching for information on', 'current period');
+
   db.query(config, sql, {clean: true})
     .then(results => {
       if (results.length === 0) { _noResults('period'); } else {
+        spinner.stop();
         var endTime = moment(results[0].endTime, 'HH:mm:ss').format('h:mm A');
         console.log(`We are in week ${chalk.blue(results[0].week)}.\nIt's currently ${chalk.yellow(results[0].period.toLowerCase())}.\nThis period will end at ${chalk.magenta(endTime)}.`);
       }
     })
     .catch(error => {
+      spinner.stop();
       console.error(error);
     });
 };
 
-function _noResults (type) {
+const _spinner = (action, search) => {
+  spinner.text = `${action}: ${search}`;
+  spinner.start();
+};
+
+const _noResults = type => {
+  spinner.stop();
   console.log(`${logSymbols.error} No ${type} results.`);
-}
+};
 
 module.exports = edumate;
