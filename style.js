@@ -61,13 +61,6 @@ style.staffHeader = [
       }
       return value;
     }
-  },
-  {
-    value: 'Location',
-    headerColor: 'cyan',
-    color: 'white',
-    align: 'center',
-    width: 50
   }
 ];
 

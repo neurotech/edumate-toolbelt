@@ -62,11 +62,10 @@ edumate.findStaff = search => {
         spinner.stop();
         results.forEach((value, index) => {
           rows.push([
-            value.id,
+            value.staffId,
             value.firstname + ' ' + value.surname,
             value.email,
-            value.house,
-            value.location
+            value.house
           ]);
         });
         var table = Table(header, rows, {
