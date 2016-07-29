@@ -23,44 +23,14 @@ style.staffHeader = [
     headerColor: 'cyan',
     color: 'white',
     align: 'center',
-    width: 45
+    width: 35
   },
   {
-    value: 'House',
+    value: 'Location',
     headerColor: 'cyan',
     color: 'white',
     align: 'center',
-    width: 15,
-    formatter: value => {
-      if (value === 'None') {
-        value = chalk.bgRed.white(value);
-      }
-      if (value === 'Brady') {
-        value = chalk.green(value);
-      }
-      if (value === 'Cassidy') {
-        value = chalk.red(value);
-      }
-      if (value === 'Caulfield') {
-        value = chalk.yellow(value);
-      }
-      if (value === 'Delaney') {
-        value = chalk.magenta(value);
-      }
-      if (value === 'Dwyer') {
-        value = chalk.yellow(value);
-      }
-      if (value === 'McLaughlin') {
-        value = chalk.blue(value);
-      }
-      if (value === 'O\'Connor') {
-        value = chalk.grey(value);
-      }
-      if (value === 'Vaughan') {
-        value = chalk.red(value);
-      }
-      return value;
-    }
+    width: 55
   }
 ];
 

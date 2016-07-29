@@ -65,7 +65,7 @@ edumate.findStaff = search => {
             value.staffId,
             value.firstname + ' ' + value.surname,
             value.email,
-            value.house
+            value.location
           ]);
         });
         var table = Table(header, rows, {
