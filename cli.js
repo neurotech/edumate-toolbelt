@@ -1,10 +1,8 @@
 #!/usr/bin/env node
 'use strict';
-const updateNotifier = require('update-notifier');
 const meow = require('meow');
 const chalk = require('chalk');
 const edumate = require('./edumate');
-const pkg = require('./package.json');
 
 const help = `
   Usage
@@ -39,5 +37,3 @@ if (cli.input.length === 0) {
   if (cli.input[0] === 'contact') { edumate.contact(cli.input[1]); }
   if (cli.input[0] === 'period') { edumate.period(); }
 }
-
-updateNotifier({pkg}).notify();

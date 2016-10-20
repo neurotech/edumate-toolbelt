@@ -25,13 +25,15 @@
   },
   "homepage": "https://github.com/neurotech/edumate-toolbelt#readme",
   "dependencies": {
-    "chalk": "1.1.1",
+    "chalk": "1.1.3",
     "log-symbols": "1.0.2",
     "meow": "3.7.0",
-    "moment": "2.11.2",
-    "node-edumate": "5.0.0",
-    "ora": "0.1.1",
-    "tty-table": "1.0.7",
-    "update-notifier": "0.6.0"
+    "moment": "2.15.1",
+    "node-edumate": "6.0.0",
+    "ora": "0.3.0",
+    "tty-table": "2.1.0"
+  },
+  "devDependencies": {
+    "semistandard": "9.1.0"
   }
 }
